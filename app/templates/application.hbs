@@ -1,5 +1,8 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+<div class="flex layout-column">
+  <div class="layout-row layout-xs-column">
+    <div class="layout-column flex-xs flex-gt-xs-100">
+      {{chat-manager}}
+      {{outlet}}
+    </div>
+  </div>
+</div>

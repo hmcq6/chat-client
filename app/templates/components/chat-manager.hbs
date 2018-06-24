@@ -1,0 +1,77 @@
+{{#paper-card as |card|}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>
+        Messages in channel: {{channel}}
+      </h2>
+      <span class="flex"></span>
+      {{#paper-menu position="target-right target" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button}}
+            {{paper-icon "menu"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+        {{#menu.content as |content|}}
+          {{#content.menu-item onClick=(action "toggleShowUserDialog")}}
+            {{paper-icon "portrait"}}
+            <span>Change User</span>
+          {{/content.menu-item}}
+          {{#content.menu-item onClick=(action "toggleShowChannelDialog")}}
+            {{paper-icon "swap_calls"}}
+            <span>Change Channel</span>
+          {{/content.menu-item}}
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{chat-window user=user messages=messages}}
+  {{#card.content}}
+    {{chat-box socket=socket}}
+  {{/card.content}}
+{{/paper-card}}
+
+{{#if showUserDialog}}
+  {{#paper-dialog onClose=(action "closeUserDialog" "close")}}
+    {{#paper-dialog-content}}
+      <h2 class="md-title">Change User Name?</h2>
+      <p>Pick a new user name: </p>
+      {{paper-input placeholder="username" autofocus=true value=userName onChange=(action (mut userName))}}
+    {{/paper-dialog-content}}
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{paper-button
+        label="Cancel"
+        primary=true
+        onClick=(action "closeUserDialog" "cancel")
+      }}
+      {{paper-button
+        label="Change User"
+        primary=true
+        onClick=(action "closeUserDialog" "ok" userName)
+      }}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
+
+{{#if showChannelDialog}}
+  {{#paper-dialog onClose=(action "closeChannelDialog" "close")}}
+    {{#paper-dialog-content}}
+      <h2 class="md-title">Change Channel?</h2>
+      <p>Pick a new channel: </p>
+      {{paper-input placeholder="channel" autofocus=true value=channelName onChange=(action (mut channelName))}}
+    {{/paper-dialog-content}}
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{paper-button
+        label="Cancel"
+        primary=true
+        onClick=(action "closeChannelDialog" "cancel")
+      }}
+      {{paper-button
+        label="Change Channel"
+        primary=true
+        onClick=(action "closeChannelDialog" "ok" channelName)
+      }}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}

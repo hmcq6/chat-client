@@ -1,0 +1,19 @@
+<div class="layout layout-sm-column">
+  {{paper-input
+    value=message
+    textarea=true
+    label="Join in the chat"
+    class="flex-80"
+    passThru=(hash maxRows=3)
+    onChange=(action (mut message))
+  }}
+  {{#paper-button
+    label="send"
+    raised=true
+    class="flex-20"
+    onClick=(action "sendMessage")
+  }}
+    {{paper-icon "send" class="reverse"}}
+    Send
+  {{/paper-button}}
+</div>

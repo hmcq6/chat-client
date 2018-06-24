@@ -1,0 +1,26 @@
+{{#paper-list}}
+  {{#each messages as |message|}}
+    {{#paper-item class="md-3-line"}}
+      {{#if (eq message.from user)}}
+        <div class="md-list-item-text outgoing-message">
+          <p>
+            {{message.message}}
+          </p>
+        </div>
+      {{else}}
+        {{paper-icon "perm-identity" size=48}}
+        <div class="md-list-item-text incoming-message">
+          <h3>
+            From: {{message.from}}
+          </h3>
+          <p>
+            {{message.message}}
+          </p>
+        </div>
+      {{/if}}
+      {{paper-divider inset=true}}
+    {{/paper-item}}
+  {{/each}}
+{{/paper-list}}
+
+{{yield}}
