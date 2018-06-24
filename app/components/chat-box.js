@@ -6,7 +6,12 @@ export default Component.extend({
 
   actions: {
     sendMessage() {
-      this.get('socket').send(this.get('message'));
+      this.get('socket').send(
+        JSON.stringify({
+          message: this.get('message'),
+          sentAt: new Date(Date.now()).toUTCString()
+        })
+      );
       this.set('message', '')
     }
   }

@@ -3,6 +3,9 @@
     {{#paper-item class="md-3-line"}}
       {{#if (eq message.from user)}}
         <div class="md-list-item-text outgoing-message">
+          <h4>
+            Sent At: {{message.sentAt}}
+          </h4>
           <p>
             {{message.message}}
           </p>
@@ -13,6 +16,9 @@
           <h3>
             From: {{message.from}}
           </h3>
+          <h4>
+            Sent At: {{message.sentAt}}
+          </h4>
           <p>
             {{message.message}}
           </p>

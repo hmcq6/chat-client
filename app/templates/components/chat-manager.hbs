@@ -35,7 +35,13 @@
     {{#paper-dialog-content}}
       <h2 class="md-title">Change User Name?</h2>
       <p>Pick a new user name: </p>
-      {{paper-input placeholder="username" autofocus=true value=userName onChange=(action (mut userName))}}
+      {{paper-input
+        placeholder="username"
+        autofocus=true
+        value=_user
+        onChange=(action (mut _user))
+        onKeyUp=(action "submitIfEnter" "user" _user)
+      }}
     {{/paper-dialog-content}}
     {{#paper-dialog-actions class="layout-row"}}
       <span class="flex"></span>
@@ -47,7 +53,7 @@
       {{paper-button
         label="Change User"
         primary=true
-        onClick=(action "closeUserDialog" "ok" userName)
+        onClick=(action "closeUserDialog" "ok" _user)
       }}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
@@ -58,7 +64,13 @@
     {{#paper-dialog-content}}
       <h2 class="md-title">Change Channel?</h2>
       <p>Pick a new channel: </p>
-      {{paper-input placeholder="channel" autofocus=true value=channelName onChange=(action (mut channelName))}}
+      {{paper-input
+        placeholder="channel"
+        autofocus=true
+        value=_channel
+        onChange=(action (mut _channel))
+        onKeyUp=(action "submitIfEnter" "channel" _channel)
+      }}
     {{/paper-dialog-content}}
     {{#paper-dialog-actions class="layout-row"}}
       <span class="flex"></span>
@@ -70,7 +82,7 @@
       {{paper-button
         label="Change Channel"
         primary=true
-        onClick=(action "closeChannelDialog" "ok" channelName)
+        onClick=(action "closeChannelDialog" "ok" _channel)
       }}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}

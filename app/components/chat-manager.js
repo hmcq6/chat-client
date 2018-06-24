@@ -5,8 +5,8 @@ export default Component.extend({
   websockets: inject(),
   socket: null,
 
-  channel: 'groupchat',
-  user: 'hmcq6',
+  channel: 'guest',
+  user: 'guest',
   messages: [],
 
   showUserDialog: false,
@@ -43,7 +43,14 @@ export default Component.extend({
   },
 
   receivedMessage({ data }) {
-    this.set('messages', JSON.parse(data));
+    this.set(
+      'messages',
+      JSON.parse(data).map(
+        (message) => Object.assign(message, {
+          sentAt: new Date(message.sentAt).toLocaleTimeString()
+        })
+      )
+    );
   },
 
   connectionClosed(event) {
@@ -56,14 +63,20 @@ export default Component.extend({
   },
 
   actions: {
+    submitIfEnter(dialog, value, { code }) {
+      if (code === 'Enter') {
+
+        this.send(`close${ dialog.classify() }Dialog`, 'ok', value);
+      }
+    },
     toggleShowUserDialog() {
       this.toggleProperty('showUserDialog');
     },
     closeUserDialog(status, user) {
-      user = user.dasherize();
       this.set('showUserDialog', false);
+      this.set('_user', null);
       if (status === 'ok') {
-        this.set('user', user);
+        this.set('user', user.dasherize());
         this.closeSocket();
         this.updateSocket();
       }
@@ -72,10 +85,9 @@ export default Component.extend({
       this.toggleProperty('showChannelDialog');
     },
     closeChannelDialog(status, channel) {
-      channel = channel.dasherize()
       this.set('showChannelDialog', false);
       if (status === 'ok') {
-        this.set('channel', channel);
+        this.set('channel', channel.dasherize());
         this.closeSocket();
         this.updateSocket();
       }
