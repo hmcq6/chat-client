@@ -1,26 +1,32 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | chat-box', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    assert.expect(2);
 
     await render(hbs`{{chat-box}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.ok(this.$('md-input-container').length);
+    assert.ok(this.$('button').length);
+  });
 
-    // Template block usage:
-    await render(hbs`
-      {{#chat-box}}
-        template block text
-      {{/chat-box}}
-    `);
+  test('it sends a message', async function(assert) {
+    this.set('socket', {
+      send(messageObject) {
+        const { message } = JSON.parse(messageObject);
+        assert.equal(message, 'sending new message');
+      }
+    });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    await render(hbs`{{chat-box socket=socket}}`);
+
+    await fillIn('textarea', 'sending new message');
+    await click('button');
+
   });
 });

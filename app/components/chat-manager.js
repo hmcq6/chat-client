@@ -7,7 +7,7 @@ export default Component.extend({
 
   channel: 'guest',
   user: 'guest',
-  messages: [],
+  messages: null,
 
   showUserDialog: false,
   showChannelDialog: false,
@@ -39,7 +39,7 @@ export default Component.extend({
     this.get('websockets').closeSocketFor(`ws://localhost:7611/${ channel }/${ user }`);
   },
 
-  connectionOpened(event) {
+  connectionOpened(_event) {
   },
 
   receivedMessage({ data }) {
@@ -53,7 +53,13 @@ export default Component.extend({
     );
   },
 
-  connectionClosed(event) {
+  connectionClosed(_event) {
+  },
+
+  changeChatProperty(property, value) {
+    this.set(property, value.dasherize());
+    this.closeSocket();
+    this.updateSocket();
   },
 
   willDestroyElement() {
@@ -65,32 +71,17 @@ export default Component.extend({
   actions: {
     submitIfEnter(dialog, value, { code }) {
       if (code === 'Enter') {
-
         this.send(`close${ dialog.classify() }Dialog`, 'ok', value);
       }
     },
-    toggleShowUserDialog() {
-      this.toggleProperty('showUserDialog');
+    toggleDialog(dialog) {
+      this.toggleProperty(`show${ dialog.classify() }Dialog`);
     },
-    closeUserDialog(status, user) {
-      this.set('showUserDialog', false);
-      this.set('_user', null);
+    closeDialog(status, property, value) {
+      this.set(`show${ property.classify() }Dialog`, false);
       if (status === 'ok') {
-        this.set('user', user.dasherize());
-        this.closeSocket();
-        this.updateSocket();
+        this.changeChatProperty(property, value);
       }
-    },
-    toggleShowChannelDialog() {
-      this.toggleProperty('showChannelDialog');
-    },
-    closeChannelDialog(status, channel) {
-      this.set('showChannelDialog', false);
-      if (status === 'ok') {
-        this.set('channel', channel.dasherize());
-        this.closeSocket();
-        this.updateSocket();
-      }
-    },
+    }
   }
 });
