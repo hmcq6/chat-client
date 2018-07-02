@@ -12,7 +12,7 @@ module('Unit | Component | chat-window', function(hooks) {
     assert.ok(chatWindow.get('channelHasNoMessages'));
   });
 
-  test('channelHasNoMessages should be true when there are messages in the queue', function(assert) {
+  test('channelHasNoMessages should be false when there are messages in the queue', function(assert) {
     assert.expect(1);
 
     const chatWindow = this.owner.lookup('component:chat-window');
