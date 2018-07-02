@@ -54,6 +54,7 @@
         label="Change User"
         primary=true
         raised=true
+        disabled=(not _user)
         onClick=(action "closeDialog" "ok" "user" _user)
       }}
     {{/paper-dialog-actions}}
@@ -84,6 +85,7 @@
         label="Change Channel"
         primary=true
         raised=true
+        disabled=(not _channel)
         onClick=(action "closeDialog" "ok" "channel" _channel)
       }}
     {{/paper-dialog-actions}}
