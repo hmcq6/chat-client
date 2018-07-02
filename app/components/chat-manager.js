@@ -69,9 +69,9 @@ export default Component.extend({
   },
 
   actions: {
-    submitIfEnter(dialog, value, { code }) {
+    submitIfEnter(property, value, { code }) {
       if (code === 'Enter') {
-        this.send(`close${ dialog.classify() }Dialog`, 'ok', value);
+        this.send('closeDialog', 'ok', property, value);
       }
     },
     toggleDialog(dialog) {
