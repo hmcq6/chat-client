@@ -70,7 +70,7 @@ export default Component.extend({
 
   actions: {
     submitIfEnter(property, value, { code }) {
-      if (code === 'Enter') {
+      if (code === 'Enter' && value) {
         this.send('closeDialog', 'ok', property, value);
       }
     },
