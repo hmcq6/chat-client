@@ -1,7 +1,15 @@
 # chat-client
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This README outlines the details of how to set up the (Ember + Redis + Node + WebSockets) Chat Client. The chat client connects with the server to display the messages stored in Redis. 
+
+## Overview
+
+The `chat-client` Ember app is a WebSockets based chat room client, intended to be used in tandem with the Node based [`chat-server`](https://github.com/hmcq6/chat-server). The `chat-client` app will attempt to establish a WebSockets connection with the server. If the connection is susccessful the client will listen for messages sent over the WebSockets connection, the client will also broadcast messages over the socket to be stored by the server.
+
+Users are able to change the chatroom channel and their username using the menu in the upper right hand corner.
+
+## Network Diagram
+![(Ember + Redis + Node + WebSockets) chat network diagram](https://drive.google.com/uc?export=view&id=1uty6TKiL5NvknUNJgQAomB7D9PgH9ti3)
 
 ## Prerequisites
 
@@ -10,6 +18,7 @@ You will need the following things properly installed on your computer.
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with npm)
 * [Ember CLI](https://ember-cli.com/)
+* [Redis](https://redis.io/download)
 * [Google Chrome](https://google.com/chrome/)
 
 ## Installation
@@ -20,13 +29,10 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
+* Start the `chat-server`, this app connects to the server over port 7611
 * `ember serve`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
 
 ### Running Tests
 
@@ -42,15 +48,3 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
