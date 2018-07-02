@@ -1,4 +1,12 @@
 {{#paper-list}}
+  {{#if channelHasNoMessages}}
+    {{#paper-item class="md-3-line text-center"}}
+      <div class="md-list-item-text">
+        <h3>Looks like there's no messages on this channel</h3>
+        <h4>Why don't you start a conversation?</h4>
+      </div>
+    {{/paper-item}}
+  {{/if}}
   {{#each messages as |message|}}
     {{#paper-item class="md-3-line"}}
       {{#if (eq message.from user)}}

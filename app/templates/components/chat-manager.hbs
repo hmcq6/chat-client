@@ -12,11 +12,11 @@
           {{/paper-button}}
         {{/menu.trigger}}
         {{#menu.content as |content|}}
-          {{#content.menu-item onClick=(action "toggleShowUserDialog")}}
+          {{#content.menu-item onClick=(action "toggleDialog" "user")}}
             {{paper-icon "portrait"}}
             <span>Change User</span>
           {{/content.menu-item}}
-          {{#content.menu-item onClick=(action "toggleShowChannelDialog")}}
+          {{#content.menu-item onClick=(action "toggleDialog" "channel")}}
             {{paper-icon "swap_calls"}}
             <span>Change Channel</span>
           {{/content.menu-item}}
@@ -31,7 +31,7 @@
 {{/paper-card}}
 
 {{#if showUserDialog}}
-  {{#paper-dialog onClose=(action "closeUserDialog" "close")}}
+  {{#paper-dialog onClose=(action "closeDialog" "close" "user")}}
     {{#paper-dialog-content}}
       <h2 class="md-title">Change User Name?</h2>
       <p>Pick a new user name: </p>
@@ -48,19 +48,20 @@
       {{paper-button
         label="Cancel"
         primary=true
-        onClick=(action "closeUserDialog" "cancel")
+        onClick=(action "closeDialog" "cancel" "user")
       }}
       {{paper-button
         label="Change User"
         primary=true
-        onClick=(action "closeUserDialog" "ok" _user)
+        raised=true
+        onClick=(action "closeDialog" "ok" "user" _user)
       }}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
 {{/if}}
 
 {{#if showChannelDialog}}
-  {{#paper-dialog onClose=(action "closeChannelDialog" "close")}}
+  {{#paper-dialog onClose=(action "closeDialog" "close" "channel")}}
     {{#paper-dialog-content}}
       <h2 class="md-title">Change Channel?</h2>
       <p>Pick a new channel: </p>
@@ -77,12 +78,13 @@
       {{paper-button
         label="Cancel"
         primary=true
-        onClick=(action "closeChannelDialog" "cancel")
+        onClick=(action "closeDialog" "cancel" "channel")
       }}
       {{paper-button
         label="Change Channel"
         primary=true
-        onClick=(action "closeChannelDialog" "ok" _channel)
+        raised=true
+        onClick=(action "closeDialog" "ok" "channel" _channel)
       }}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
